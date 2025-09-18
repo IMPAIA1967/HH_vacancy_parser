@@ -19,9 +19,9 @@ def create_database():
     exists = cursor.fetchone()
     if not exists:
         cursor.execute(f"CREATE DATABASE {DB_NAME}")
-        print(f"✅ База данных '{DB_NAME}' создана")
+        print(f"База данных '{DB_NAME}' создана")
     else:
-        print(f"ℹ️ База данных '{DB_NAME}' уже существует")
+        print(f"База данных '{DB_NAME}' уже существует")
 
     cursor.close()
     conn.close()
