@@ -1,4 +1,18 @@
-venv/*
-__pycache__
-*.pyc
-.env*
+# Файл конфигурации с паролями
+config.py
+
+# Файлы БД
+*.sqlite3
+*.db
+
+# Кэш Python
+__pycache__/
+*.py[cod]
+
+# Виртуальное окружение
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
