@@ -5,7 +5,6 @@ from database import create_database, create_tables, insert_employer_data, inser
 from db_manager import DBManager
 
 
-
 COMPANY_IDS = ['15478',  # VK
                '1740',   # Яндекс
                '3529',   # Сбер
@@ -14,10 +13,11 @@ COMPANY_IDS = ['15478',  # VK
                '2748',   # Ростелеком
                '3127',   # МТС
                '3776',   # МегаФон
-               '907345', # Ozon
+               '907345',  # Ozon
                '2180']   # Лаборатория Касперского
 
-def main():
+
+def main() -> None:
     """
     Основная функция проекта. Здесь все собирается воедино
     """
@@ -26,7 +26,13 @@ def main():
     create_tables()
 
     # Подключаемся к нашей БД для заполнения данными
-    conn = psycopg2.connect(dbname="hh_vacancies", user="postgres", password="12345", host="localhost", port="5432")
+    conn = psycopg2.connect(
+        dbname="hh_vacancies",
+        user="postgres",
+        password="12345",
+        host="localhost",
+        port="5432"
+    )
 
     print("Начинаем сбор данных с HH.ru...")
     for company_id in COMPANY_IDS:
@@ -70,6 +76,7 @@ def main():
                 salary_info = f"от {salary_from}" if salary_from else "не указана"
                 if salary_to:
                     salary_info += f" до {salary_to}"
+                # Разбил длинную строку на две части
                 print(f"{company} - {title} - Зарплата: {salary_info} - {url}")
 
         elif choice == "3":
@@ -80,7 +87,9 @@ def main():
             data = db_manager.get_vacancies_with_higher_salary()
             for vac in data:
                 # vac - это кортеж, элементы соответствуют столбцам в таблице vacancies
-                print(f"{vac[2]} (ID: {vac[0]}) - Зарплата от: {vac[3]} - {vac[5]}")
+                # Разбил длинную строку на две части
+                vacancy_info = f"{vac[2]} (ID: {vac[0]}) - Зарплата от: {vac[3]}"
+                print(f"{vacancy_info} - {vac[5]}")
 
         elif choice == "5":
             keyword = input("Введите ключевое слово для поиска: ")

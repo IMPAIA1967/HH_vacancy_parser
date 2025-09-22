@@ -1,7 +1,7 @@
 import requests  # для выполнения HTTP-запросов
 
 
-def get_employer_data(employer_id):
+def get_employer_data(employer_id) -> dict:
     """
     Эта функция получает данные о компании по ее ID на HH.ru
     """
@@ -13,8 +13,6 @@ def get_employer_data(employer_id):
 
     # Проверяем, что запрос успешен
     data = response.json()  # Преобразуем ответ от сервера в удобный формат Python (словарь)
-
-
     employer_data = {
         'id': data['id'],  # ID компании
         'name': data['name'],  # Название компании
@@ -23,7 +21,7 @@ def get_employer_data(employer_id):
     return employer_data
 
 
-def get_vacancies_data(employer_id):
+def get_vacancies_data(employer_id) -> list:
     """
     Эта функция получает список вакансий для конкретной компании.
     """

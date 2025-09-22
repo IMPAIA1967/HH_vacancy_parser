@@ -8,7 +8,7 @@ DB_HOST = "localhost"
 DB_PORT = "5432"
 
 
-def get_connection(dbname=DB_NAME):
+def get_connection(dbname=DB_NAME) -> psycopg2.connect:
     """Создает подключение к БД"""
     try:
         conn = psycopg2.connect(
@@ -25,7 +25,7 @@ def get_connection(dbname=DB_NAME):
         return None
 
 
-def create_database():
+def create_database() -> None:
     """ Создаем базу данных """
     # Подключаемся к стандартной БД, чтобы создать новую
     conn = psycopg2.connect(dbname="postgres", user=DB_USER, password=DB_PASSWORD, host=DB_HOST, port=DB_PORT)
@@ -45,7 +45,7 @@ def create_database():
     conn.close()
 
 
-def create_tables():
+def create_tables() -> None:
     """
     Создает таблицы в базе данных.
     """
@@ -86,7 +86,7 @@ def create_tables():
     print("Таблицы созданы успешно.")
 
 
-def insert_employer_data(conn, employer_data):
+def insert_employer_data(conn, employer_data) -> None:
     """
     Вставляет данные о компании в таблицу employers
     """
@@ -95,14 +95,15 @@ def insert_employer_data(conn, employer_data):
     query = """
         INSERT INTO employers (employer_id, name, url)
         VALUES (%s, %s, %s)
-        ON CONFLICT (employer_id) DO NOTHING  
+        ON CONFLICT (employer_id) DO NOTHING
     """
     # Подставляем значения из словаря в наш запрос
     cur.execute(query, (employer_data['id'], employer_data['name'], employer_data['url']))
     conn.commit()  # Сохраняем изменения
     cur.close()
 
-def insert_vacancy_data(conn, vacancy_data):
+
+def insert_vacancy_data(conn, vacancy_data) -> None:
     """
     Вставляет данные о вакансии в таблицу vacancies.
     """

@@ -1,9 +1,10 @@
 import psycopg2
 
+
 class DBManager:
     """Класс для управления базой данных вакансий."""
 
-    def __init__(self, db_name, user, password, host, port):
+    def __init__(self, db_name, user, password, host, port) -> None:
         # Конструктор класса. Сохраняет параметры подключения как атрибуты объекта
         self.db_name = db_name
         self.user = user
@@ -11,7 +12,7 @@ class DBManager:
         self.host = host
         self.port = port
 
-    def _connect(self):
+    def _connect(self) -> psycopg2.connect:
         """Внутренний метод для установления подключения к БД"""
         return psycopg2.connect(
             dbname=self.db_name,
@@ -21,7 +22,7 @@ class DBManager:
             port=self.port
         )
 
-    def get_companies_and_vacancies_count(self):
+    def get_companies_and_vacancies_count(self) -> list:
         """
         Получает список всех компаний и количество вакансий у каждой компании
         """
@@ -41,7 +42,7 @@ class DBManager:
         conn.close()
         return results  # Возвращаем список кортежей: [('Яндекс', 15), ('Сбер', 10)]
 
-    def get_all_vacancies(self):
+    def get_all_vacancies(self) -> list:
         """
         Получает список всех вакансий с указанием компании, названия, зарплаты и ссылки
         """
@@ -58,7 +59,7 @@ class DBManager:
         conn.close()
         return results
 
-    def get_avg_salary(self):
+    def get_avg_salary(self) -> list:
         """
         Получает среднюю зарплату по вакансиям (по полю salary_from).
         """
@@ -72,7 +73,7 @@ class DBManager:
         conn.close()
         return round(result) if result else 0  # Округляем число
 
-    def get_vacancies_with_higher_salary(self):
+    def get_vacancies_with_higher_salary(self) -> list:
         """
         Получает список всех вакансий, у которых зарплата выше средней.
         Использует подзапрос
@@ -90,7 +91,7 @@ class DBManager:
         conn.close()
         return results
 
-    def get_vacancies_with_keyword(self, keyword):
+    def get_vacancies_with_keyword(self, keyword) -> list:
         """
         Получает список всех вакансий, в названии которых есть переданное слово.
         Использует оператор LIKE для поиска по шаблону :cite[4].
